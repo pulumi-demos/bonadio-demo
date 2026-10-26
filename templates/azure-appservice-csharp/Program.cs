@@ -20,7 +20,7 @@ return await Deployment.RunAsync(() =>
         SkuName = skuName,
         SkuTier = skuTier,
         LinuxFxVersion = linuxFxVersion,
-        AppSettings =
+        AppSettings = new InputMap<string>
         {
             { "ENVIRONMENT", Deployment.Instance.StackName },
         },

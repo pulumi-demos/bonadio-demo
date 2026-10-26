@@ -40,25 +40,15 @@ public sealed class AppServiceArgs : ResourceArgs
     [Input("alwaysOn")]
     public Input<bool>? AlwaysOn { get; set; }
 
-    [Input("appSettings")]
-    private InputMap<string>? _appSettings;
 
     /// <summary>Application settings (environment variables) for the web app.</summary>
-    public InputMap<string> AppSettings
-    {
-        get => _appSettings ??= new InputMap<string>();
-        set => _appSettings = value;
-    }
+    [Input("appSettings")]
+    public InputMap<string>? AppSettings { get; set; }
 
-    [Input("tags")]
-    private InputMap<string>? _tags;
 
     /// <summary>Tags applied to all resources created by the component.</summary>
-    public InputMap<string> Tags
-    {
-        get => _tags ??= new InputMap<string>();
-        set => _tags = value;
-    }
+    [Input("tags")]
+    public InputMap<string>? Tags { get; set; }
 }
 
 /// <summary>
@@ -89,9 +79,9 @@ public sealed class AppService : ComponentResource
     public Output<string> PrincipalId { get; private set; }
 
     public AppService(string name, AppServiceArgs args, ComponentResourceOptions? options = null)
-        : base("bonadio:azure:AppService", name, options)
+        : base("bonadio-appservice:index:AppService", name, options)
     {
-        var tags = args.Tags;
+        var tags = args.Tags ?? new InputMap<string>();
 
         Output<string> resourceGroupName;
         Output<string> location;
@@ -133,7 +123,7 @@ public sealed class AppService : ComponentResource
             Tags = tags,
         }, new CustomResourceOptions { Parent = this });
 
-        var appSettings = args.AppSettings.ToOutput().Apply(settings =>
+        var appSettings = (args.AppSettings ?? new InputMap<string>()).ToOutput().Apply(settings =>
             settings.Select(kv => new NameValuePairArgs { Name = kv.Key, Value = kv.Value }).ToList());
 
         var app = new WebApp($"{name}-app", new WebAppArgs
