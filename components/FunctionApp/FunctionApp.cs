@@ -105,7 +105,7 @@ public sealed class FunctionApp : ComponentResource
     public Output<string> PrincipalId { get; private set; }
 
     public FunctionApp(string name, FunctionAppArgs args, ComponentResourceOptions? options = null)
-        : base("bonadio-functionapp:index:FunctionApp", name, options)
+        : base("azure-functionapp:index:FunctionApp", name, options)
     {
         var tags = args.Tags ?? new InputMap<string>();
         var workerRuntime = args.WorkerRuntime ?? "dotnet-isolated";

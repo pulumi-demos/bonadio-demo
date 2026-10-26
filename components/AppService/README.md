@@ -1,4 +1,4 @@
-# bonadio-appservice
+# azure-appservice
 
 Pulumi component that deploys a Linux Azure App Service (web app) with its App Service plan and, optionally, its resource group.
 

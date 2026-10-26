@@ -1,4 +1,4 @@
-# bonadio-functionapp
+# azure-functionapp
 
 Pulumi component that deploys a Linux Azure Function App with a backing storage account, hosting plan and (optionally) Application Insights, plus the resource group if one is not supplied.
 

@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Bonadio.Components</RootNamespace>
-    <AssemblyName>bonadio-functionapp</AssemblyName>
+    <AssemblyName>azure-functionapp</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
