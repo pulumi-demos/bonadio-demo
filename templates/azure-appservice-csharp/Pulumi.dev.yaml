@@ -1,0 +1,4 @@
+environment:
+  - cloud-access/azure-oidc
+config:
+  azure-native:location: eastus

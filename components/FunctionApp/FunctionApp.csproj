@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Bonadio.Components</RootNamespace>
+    <AssemblyName>Bonadio.Components.FunctionApp</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Pulumi" Version="3.*" />
+    <PackageReference Include="Pulumi.AzureNative" Version="3.*" />
+  </ItemGroup>
+
+</Project>
