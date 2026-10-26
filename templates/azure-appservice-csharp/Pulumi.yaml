@@ -1,5 +1,5 @@
-name: azure-appservice-csharp
-description: Azure App Service deployed with the shared AppService component
+name: ${PROJECT}
+description: ${DESCRIPTION}
 runtime: dotnet
 template:
   description: A C# program that deploys an Azure App Service using the azure-appservice component from the private registry
