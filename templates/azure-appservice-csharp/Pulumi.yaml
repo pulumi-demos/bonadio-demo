@@ -1,0 +1,18 @@
+name: azure-appservice-csharp
+description: Azure App Service deployed with the shared AppService component
+runtime: dotnet
+template:
+  description: A C# program that deploys an Azure App Service using the shared AppService component
+  config:
+    azure-native:location:
+      description: The Azure region to deploy to
+      default: eastus
+    skuName:
+      description: App Service plan SKU name (e.g. B1, S1, P1v3)
+      default: B1
+    skuTier:
+      description: App Service plan SKU tier (e.g. Basic, Standard, PremiumV3)
+      default: Basic
+    linuxFxVersion:
+      description: Linux runtime stack (e.g. DOTNETCORE|10.0, NODE|22-lts)
+      default: DOTNETCORE|10.0
