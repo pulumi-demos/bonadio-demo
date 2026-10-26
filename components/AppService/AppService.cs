@@ -79,7 +79,7 @@ public sealed class AppService : ComponentResource
     public Output<string> PrincipalId { get; private set; }
 
     public AppService(string name, AppServiceArgs args, ComponentResourceOptions? options = null)
-        : base("bonadio-appservice:index:AppService", name, options)
+        : base("azure-appservice:index:AppService", name, options)
     {
         var tags = args.Tags ?? new InputMap<string>();
 
