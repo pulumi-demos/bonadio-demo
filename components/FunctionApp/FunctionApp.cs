@@ -56,30 +56,21 @@ public sealed class FunctionAppArgs : ResourceArgs
     public Input<string>? SkuTier { get; set; }
 
     /// <summary>Create an Application Insights instance and wire it up. Defaults to true.</summary>
-    public bool EnableApplicationInsights { get; set; } = true;
+    [Input("enableApplicationInsights")]
+    public bool? EnableApplicationInsights { get; set; }
 
-    [Input("appSettings")]
-    private InputMap<string>? _appSettings;
 
     /// <summary>
     /// Additional application settings. Settings managed by the component
     /// (AzureWebJobsStorage, FUNCTIONS_*) can be overridden here.
     /// </summary>
-    public InputMap<string> AppSettings
-    {
-        get => _appSettings ??= new InputMap<string>();
-        set => _appSettings = value;
-    }
+    [Input("appSettings")]
+    public InputMap<string>? AppSettings { get; set; }
 
-    [Input("tags")]
-    private InputMap<string>? _tags;
 
     /// <summary>Tags applied to all resources created by the component.</summary>
-    public InputMap<string> Tags
-    {
-        get => _tags ??= new InputMap<string>();
-        set => _tags = value;
-    }
+    [Input("tags")]
+    public InputMap<string>? Tags { get; set; }
 }
 
 /// <summary>
@@ -114,9 +105,9 @@ public sealed class FunctionApp : ComponentResource
     public Output<string> PrincipalId { get; private set; }
 
     public FunctionApp(string name, FunctionAppArgs args, ComponentResourceOptions? options = null)
-        : base("bonadio:azure:FunctionApp", name, options)
+        : base("bonadio-functionapp:index:FunctionApp", name, options)
     {
-        var tags = args.Tags;
+        var tags = args.Tags ?? new InputMap<string>();
         var workerRuntime = args.WorkerRuntime ?? "dotnet-isolated";
 
         Output<string> resourceGroupName;
@@ -191,7 +182,7 @@ public sealed class FunctionApp : ComponentResource
         };
 
         // Resources cannot be created inside Apply, so this is a plain bool.
-        if (args.EnableApplicationInsights)
+        if (args.EnableApplicationInsights ?? true)
         {
             var insights = new Component($"{name}-ai", new ComponentArgs
             {
@@ -205,7 +196,7 @@ public sealed class FunctionApp : ComponentResource
             baseSettings.Add("APPLICATIONINSIGHTS_CONNECTION_STRING", insights.ConnectionString);
         }
 
-        var appSettings = Output.Tuple(baseSettings.ToOutput(), args.AppSettings.ToOutput()).Apply(t =>
+        var appSettings = Output.Tuple(baseSettings.ToOutput(), (args.AppSettings ?? new InputMap<string>()).ToOutput()).Apply(t =>
         {
             var merged = new Dictionary<string, string>(t.Item1);
             foreach (var kv in t.Item2)
