@@ -1,4 +1,4 @@
-using Bonadio.Components;
+using PulumiDemos.AzureAppservice;
 using Pulumi;
 
 return await Deployment.RunAsync(() =>
